@@ -2,6 +2,7 @@ package com.fly.unicorn.motive.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,18 +10,19 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Video {
+public class Video extends BaseTimeEntity {
 	@JsonProperty(value = "VIDEO_ID")
 	@Column(name = "video_id")
 	@Min(value = 1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private int videoId;
+	private long videoId;
+
+	// Todo User
 
 	@JsonProperty(value = "DAY")
 	@Column(name = "day", columnDefinition = "TIMESTAMP")
@@ -31,16 +33,25 @@ public class Video {
 	@NotBlank
 	private String title;
 
+	@NotBlank
 	@JsonProperty(value = "URL")
 	@Column(name = "url")
-	@NotBlank
+	@Lob
 	private String url;
+
+	@JsonProperty(value = "THUMBNAIL")
+	@Column(name = "thumbnail")
+	@Lob
+	private MultipartFile thumbnail;
+
+	@JsonProperty(value = "DESCRIPTION")
+	@Column(name = "description")
+	@Lob
+	private String description;
 
 	@JsonProperty(value = "RUNNING_TIME")
 	@Column(name = "runningTime")
 	private int runningTime;
 
-	@JsonProperty(value = "COMMENT")
-	@Column(name = "comment")
-	private String comment;
+	// Todo Comment
 }

@@ -13,6 +13,12 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all {
+        exclude group : "org.slf4j", module: "slf4j-log4j12"
+        exclude group : "org.apache.logging.log4j", module: "log4j-to-slf4j"
+        exclude group : "org.apache.logging.log4j", module: "log4j-api"
+        exclude group : "log4j", module: "log4j"
+    }
 }
 
 repositories {
@@ -21,18 +27,29 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.7'
+    implementation 'org.springframework.boot:spring-boot-starter-aop:2.6.7'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.7'
     runtimeOnly 'com.h2database:h2'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.7'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'ch.qos.logback:logback-core:1.2.11'
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation "io.springfox:springfox-swagger-ui:3.0.0"
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    baseName('motive-app')
+    enabled = false
+    version('1.0.0')
 }
 
 tasks.named('bootBuildImage') {
