@@ -9,6 +9,7 @@ import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @ToString
