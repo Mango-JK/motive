@@ -8,7 +8,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class WordingServiceTest {
 
 	@Test
-	// given
 	public void postTest() {
 		System.out.println("SUCCESS");
 	}

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -23,6 +24,24 @@ public class WordingService {
 
 	private final CommonService commonService;
 	private final WordingRepository wordingRepository;
+
+	@Transactional
+	public ResponseEntity postWording(Wording wording, @RequestParam(required = false) MultipartFile image) {
+		// Todo Save-Update 쿼리가 한 번만 발생하는지 확인 필요
+		long wordingId = wordingRepository.save(wording).getWordingId();
+		log.info("saved wording :: {}", wordingId);
+
+		log.info("image.isEmpty:{}", image.isEmpty());
+		if (image != null && image.isEmpty()) {
+			File savedImage = null;
+			log.info("savedImage:{}", savedImage);
+			savedImage = commonService.saveWordingImageFile(image, wordingId);
+			log.info("savedImage:{}", savedImage);
+			wording.setImage(savedImage.getName(), savedImage.getAbsolutePath());
+		}
+		log.info("good:{}");
+		return commonService.getCommonResponse(HttpStatus.CREATED.value(), ResultCode.WORDING_CREATED.getCode(), wording, ResultCode.WORDING_CREATED.getMessage());
+	}
 
 	@Transactional(readOnly = true)
 	public ResponseEntity getWordings() {
@@ -44,20 +63,6 @@ public class WordingService {
 
 		return commonService.getCommonResponse(HttpStatus.OK.value(),
 			ResultCode.OK.getCode(), wording, ResultCode.OK.getMessage());
-	}
-
-	@Transactional
-	public ResponseEntity postWording(Wording wording, MultipartFile image) {
-		// Todo Save-Update 쿼리가 한 번만 발생하는지 확인 필요
-		long wordingId = wordingRepository.save(wording).getWordingId();
-
-		if (!image.isEmpty()) {
-			File savedImage = null;
-			savedImage = commonService.saveWordingImageFile(image, wordingId);
-			wording.setImage(savedImage.getName(), savedImage.getAbsolutePath());
-		}
-
-		return commonService.getCommonResponse(HttpStatus.CREATED.value(), ResultCode.WORDING_CREATED.getCode(), wording, ResultCode.WORDING_CREATED.getMessage());
 	}
 
 	@Transactional
@@ -88,6 +93,6 @@ public class WordingService {
 
 		wordingRepository.deleteById(wordingId);
 
-		return commonService.getCommonResponse(HttpStatus.OK.value(), ResultCode.OK.getCode(), wording, ResultCode.OK.getMessage());
+		return commonService.getCommonResponse(HttpStatus.OK.value(), ResultCode.OK.getCode(), new WordingResponseDto(wording), ResultCode.OK.getMessage());
 	}
 }
