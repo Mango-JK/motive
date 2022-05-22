@@ -1,11 +1,17 @@
 package com.fly.unicorn.motive.dto.response.wording;
 
 import com.fly.unicorn.motive.entity.Wording;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class WordingResponseDto {
 	private long wordingId;
 	private String day;
