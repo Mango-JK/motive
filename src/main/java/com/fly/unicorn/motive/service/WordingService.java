@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,16 @@ public class WordingService {
 	}
 
 	@Transactional(readOnly = true)
+	public ResponseEntity getMainWordings() {
+		List<WordingResponseDto> wordings = wordingRepository.findAllByDayBeforeOrderByDayDesc(LocalDate.now())
+			.map(WordingResponseDto::new)
+			.collect(Collectors.toList());
+
+		return commonService.getCommonResponse(HttpStatus.OK.value(), ResultCode.OK.getCode(),
+			wordings, ResultCode.OK.getMessage());
+	}
+
+	@Transactional(readOnly = true)
 	public ResponseEntity getWording(long wordingId) {
 		WordingResponseDto wording = wordingRepository.findById(wordingId).map(WordingResponseDto::new).orElseGet(null);
 
@@ -76,7 +87,6 @@ public class WordingService {
 			wording.setImage(EMPTY_STRING, EMPTY_STRING);
 		}
 
-		// Todo Update Check, Not Setter
 		wording.update(request);
 		WordingResponseDto updatedWording = new WordingResponseDto(wording);
 
@@ -94,4 +104,5 @@ public class WordingService {
 
 		return commonService.getCommonResponse(HttpStatus.OK.value(), ResultCode.OK.getCode(), new WordingResponseDto(wording), ResultCode.OK.getMessage());
 	}
+
 }

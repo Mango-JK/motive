@@ -31,6 +31,11 @@ public class WordingController {
 		return wordingService.getWordings();
 	}
 
+	@GetMapping(value = "/motive/wordings", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity getMainWordings() {
+		return wordingService.getMainWordings();
+	}
+
 	@GetMapping(value = "/wording/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity getWording(@Min(value = 1) @PathVariable("id") long id) {
 		return wordingService.getWording(id);
