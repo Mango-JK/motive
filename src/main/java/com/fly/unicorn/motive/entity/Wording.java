@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -17,7 +16,6 @@ import java.time.LocalDateTime;
 public class Wording extends BaseTimeEntity {
 	@JsonProperty(value = "WORDING_ID")
 	@Column(name = "wording_id")
-	@Min(value = 1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private long wordingId;
@@ -37,11 +35,11 @@ public class Wording extends BaseTimeEntity {
 	@NotBlank
 	private String word;
 
-	@Column(name = "file_name", nullable = false)
+	@Column(name = "file_name")
 	private String fileName;
 
 	@ToString.Exclude
-	@Column(name = "image_path", nullable = false)
+	@Column(name = "image_path")
 	private String imagePath;
 
 	@JsonProperty(value = "DESCRIPTION")

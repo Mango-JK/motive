@@ -1,32 +1,26 @@
 spring:
   profiles:
     active: local
-
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://motive-maria.cyatzgxa7cgf.ap-northeast-2.rds.amazonaws.com:3306/motive
+    username: motive
+    password: dlakdrn2
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 ---
 spring:
   profiles:
     active: local
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   jpa:
     show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
-    datasource:
-      driverClassName: org.h2.Driver
-      url: jdbc:h2:~/motive;
-      username: sa
-      password:
     properties:
       hipernate:
         show_sql: true
         format_sql: true
     hibernate:
       ddl-auto: create
-    mvc:
-      pathmatch:
-        matching-strategy: ANT_PATH_MATCHER
 
 logging:
   level:
