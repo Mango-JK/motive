@@ -1,31 +1,28 @@
 package com.fly.unicorn.motive.service;
 
-import com.fly.unicorn.motive.entity.Wording;
-import com.fly.unicorn.motive.repository.WordingRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDateTime;
-
-@SpringBootTest
+//@SpringBootTest
+@ExtendWith(SpringExtension.class)
 class WordingServiceTest {
 
-	@Autowired
-	WordingRepository wordingRepository;
+//	@Autowired
+//	WordingRepository wordingRepository;
 
 	@Test
 	public void postTest() {
 		System.out.println("SUCCESS");
-		Wording wording = Wording.builder()
-			.day(LocalDateTime.now())
-			.description("test")
-			.word("good")
-			.writer("me")
-			.build();
-
-		wordingRepository.save(wording);
-		System.out.println("finish");
+//		Wording wording = Wording.builder()
+//			.day(LocalDateTime.now())
+//			.description("test")
+//			.word("good")
+//			.writer("me")
+//			.build();
+//
+//		wordingRepository.save(wording);
+//		System.out.println("finish");
 	}
 
 }
