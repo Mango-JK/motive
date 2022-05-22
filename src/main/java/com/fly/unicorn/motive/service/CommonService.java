@@ -14,9 +14,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,7 +31,7 @@ public class CommonService {
 		File savedImageFile;
 		String fileName;
 		String fileExtension = FilenameUtils.getExtension(image.getOriginalFilename());
-		fileName = wordingImagePath + wordingId + "_" + image.getOriginalFilename().split(".")[0].toLowerCase(Locale.ROOT) + "." +fileExtension;
+		fileName = wordingImagePath + wordingId + "_" + LocalDate.now() + "." + fileExtension;
 
 		savedImageFile = new File(fileName);
 		try (OutputStream os = new FileOutputStream(savedImageFile)) {

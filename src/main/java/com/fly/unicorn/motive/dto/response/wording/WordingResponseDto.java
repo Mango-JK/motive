@@ -1,14 +1,10 @@
 package com.fly.unicorn.motive.dto.response.wording;
 
 import com.fly.unicorn.motive.entity.Wording;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-
+@Setter
+@Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,17 +19,10 @@ public class WordingResponseDto {
 
 	public WordingResponseDto(Wording wording) {
 		wordingId = wording.getWordingId();
-		day = toStringDateTime(wording.getDay());
+		day = wording.getDay().toString();
 		writer = wording.getWriter();
 		word = wording.getWord();
 		fileName = wording.getFileName();
 		description = wording.getDescription();
-	}
-
-	private String toStringDateTime(LocalDateTime localDateTime){
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return Optional.ofNullable(localDateTime)
-			.map(formatter::format)
-			.orElse("");
 	}
 }

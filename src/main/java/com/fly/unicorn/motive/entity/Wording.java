@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Builder
 @Getter
@@ -24,7 +23,7 @@ public class Wording extends BaseTimeEntity {
 
 	@JsonProperty(value = "DAY")
 	@Column(name = "day", columnDefinition = "TIMESTAMP")
-	private LocalDateTime day;
+	private LocalDate day;
 
 	@JsonProperty(value = "WRITER")
 	@Column(name = "writer", nullable = false)
@@ -32,7 +31,6 @@ public class Wording extends BaseTimeEntity {
 
 	@JsonProperty(value = "WORD")
 	@Column(name = "word")
-	@NotBlank
 	private String word;
 
 	@Column(name = "file_name")

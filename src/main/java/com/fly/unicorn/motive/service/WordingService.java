@@ -25,21 +25,18 @@ public class WordingService {
 	private final CommonService commonService;
 	private final WordingRepository wordingRepository;
 
+	public static final String EMPTY_STRING = "";
+
 	@Transactional
 	public ResponseEntity postWording(Wording wording, @RequestParam(required = false) MultipartFile image) {
 		// Todo Save-Update 쿼리가 한 번만 발생하는지 확인 필요
 		long wordingId = wordingRepository.save(wording).getWordingId();
-		log.info("saved wording :: {}", wordingId);
 
-		log.info("image.isEmpty:{}", image.isEmpty());
-		if (image != null && image.isEmpty()) {
+		if (!image.isEmpty()) {
 			File savedImage = null;
-			log.info("savedImage:{}", savedImage);
 			savedImage = commonService.saveWordingImageFile(image, wordingId);
-			log.info("savedImage:{}", savedImage);
 			wording.setImage(savedImage.getName(), savedImage.getAbsolutePath());
 		}
-		log.info("good:{}");
 		return commonService.getCommonResponse(HttpStatus.CREATED.value(), ResultCode.WORDING_CREATED.getCode(), wording, ResultCode.WORDING_CREATED.getMessage());
 	}
 
@@ -75,6 +72,8 @@ public class WordingService {
 			File savedImage = null;
 			savedImage = commonService.saveWordingImageFile(image, wordingId);
 			wording.setImage(savedImage.getName(), savedImage.getAbsolutePath());
+		} else {
+			wording.setImage(EMPTY_STRING, EMPTY_STRING);
 		}
 
 		// Todo Update Check, Not Setter
